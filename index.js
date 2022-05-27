@@ -39,6 +39,15 @@ async function run() {
             const tool = await toolCollection.findOne(query);
             res.send(tool);
         });
+
+        // ==== Setting API to load ALL TOOLS =======
+        const reviewCollection = client.db("Tools_Shop").collection("Reviews");
+        app.get("/reviews", async (req, res) => {
+            const query = {};
+            const cursor = reviewCollection.find(query);
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+        });
     } finally {
         // generally disconnect connection
     }
