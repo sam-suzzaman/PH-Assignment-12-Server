@@ -10,7 +10,7 @@ app.use(express.json());
 
 // ====== Mongo Connection
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.k1gqm.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
@@ -24,11 +24,20 @@ async function run() {
         await client.connect();
         const toolCollection = client.db("Tools_Shop").collection("Tools");
 
+        // ==== Setting API to load ALL TOOLS =======
         app.get("/tools", async (req, res) => {
             const query = {};
             const cursor = toolCollection.find(query);
             const tools = await cursor.toArray();
             res.send(tools);
+        });
+
+        // === Setting API to load Single Tool ====
+        app.get("/tools/:toolID", async (req, res) => {
+            const ID = req.params.toolID;
+            const query = { _id: ObjectId(ID) };
+            const tool = await toolCollection.findOne(query);
+            res.send(tool);
         });
     } finally {
         // generally disconnect connection
