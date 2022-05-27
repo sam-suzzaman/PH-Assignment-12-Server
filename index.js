@@ -32,6 +32,14 @@ async function run() {
             res.send(tools);
         });
 
+        // ==== Setting API to load Limited TOOLS =======
+        app.get("/toolsLimit", async (req, res) => {
+            const query = {};
+            const cursor = toolCollection.find(query).limit(6);
+            const tools = await cursor.toArray();
+            res.send(tools);
+        });
+
         // === Setting API to load Single Tool ====
         app.get("/tools/:toolID", async (req, res) => {
             const ID = req.params.toolID;
