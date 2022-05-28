@@ -56,6 +56,15 @@ async function run() {
             const reviews = await cursor.toArray();
             res.send(reviews);
         });
+
+        // ==== Setting API to load Blogs Data =======
+        const blogCollection = client.db("Tools_Shop").collection("Blog-Data");
+        app.get("/blogs", async (req, res) => {
+            const query = {};
+            const cursor = blogCollection.find(query);
+            const blogs = await cursor.toArray();
+            res.send(blogs);
+        });
     } finally {
         // generally disconnect connection
     }
