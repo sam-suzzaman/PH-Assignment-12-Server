@@ -87,6 +87,15 @@ async function run() {
             const skills = await cursor.toArray();
             res.send(skills);
         });
+
+        // ==== Setting API to load Portfolio-Skill Data =======
+        const heroCollection = client.db("Tools_Shop").collection("Hero");
+        app.get("/hero", async (req, res) => {
+            const query = {};
+            const cursor = heroCollection.find(query);
+            const hero = await cursor.toArray();
+            res.send(hero);
+        });
     } finally {
         // generally disconnect connection
     }
