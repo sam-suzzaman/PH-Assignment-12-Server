@@ -65,6 +65,28 @@ async function run() {
             const blogs = await cursor.toArray();
             res.send(blogs);
         });
+
+        // ==== Setting API to load Portfolio-Project Data =======
+        const projectCollection = client
+            .db("Tools_Shop")
+            .collection("portfolio-project");
+        app.get("/portfolioProject", async (req, res) => {
+            const query = {};
+            const cursor = projectCollection.find(query);
+            const projects = await cursor.toArray();
+            res.send(projects);
+        });
+
+        // ==== Setting API to load Portfolio-Skill Data =======
+        const skillCollection = client
+            .db("Tools_Shop")
+            .collection("portfolio-skill");
+        app.get("/portfolioSkill", async (req, res) => {
+            const query = {};
+            const cursor = skillCollection.find(query);
+            const skills = await cursor.toArray();
+            res.send(skills);
+        });
     } finally {
         // generally disconnect connection
     }
