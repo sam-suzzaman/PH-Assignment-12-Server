@@ -104,7 +104,7 @@ run().catch(console.dir);
 
 //  ====== API Testing
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("server running");
 });
 
 app.listen(port, () => {
