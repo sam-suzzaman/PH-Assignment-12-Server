@@ -22,8 +22,8 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         await client.connect();
-        const toolCollection = client.db("Tools_Shop").collection("Tools");
 
+        const toolCollection = client.db("Tools_Shop").collection("Tools");
         // ==== Setting API to load ALL TOOLS =======
         app.get("/tools", async (req, res) => {
             const query = {};
@@ -95,6 +95,25 @@ async function run() {
             const cursor = heroCollection.find(query);
             const hero = await cursor.toArray();
             res.send(hero);
+        });
+
+        //  ++++ Update Order-Quantity +++
+        app.put("/order/:id", async (req, res) => {
+            const id = req.params.id;
+            const updatedTool = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    orderQuantity: updatedTool.orderQuantity,
+                },
+            };
+            const result = await toolCollection.updateOne(
+                filter,
+                updatedDoc,
+                options
+            );
+            res.send(result);
         });
     } finally {
         // generally disconnect connection
