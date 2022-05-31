@@ -97,6 +97,14 @@ async function run() {
             res.send(hero);
         });
 
+        //  #### Post API for Placing Order ####
+        const orderCollection = client.db("Tools_Shop").collection("Orders");
+        app.post("/order", async (req, res) => {
+            const newOrder = req.body;
+            const result = await orderCollection.insertOne(newOrder);
+            res.send(result);
+        });
+
         //  ++++ Update Order-Quantity +++
         app.put("/order/:id", async (req, res) => {
             const id = req.params.id;
