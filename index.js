@@ -155,7 +155,7 @@ run().catch(console.dir);
 
 //  ====== API Testing
 app.get("/", (req, res) => {
-    res.send("tools kit server running");
+    res.send("server is ok.");
 });
 
 app.listen(port, () => {
