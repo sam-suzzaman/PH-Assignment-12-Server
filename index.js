@@ -104,6 +104,14 @@ async function run() {
             const result = await orderCollection.insertOne(newOrder);
             res.send(result);
         });
+        // === API to find Orders through Email::::
+        app.get("/myorders", async (req, res) => {
+            const email = req.query.email;
+            const query = { orderEmail: email };
+            const cursor = orderCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        });
 
         //  ++++ Update Order-Quantity +++
         app.put("/order/:id", async (req, res) => {
