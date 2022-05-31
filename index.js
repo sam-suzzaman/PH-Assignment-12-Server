@@ -104,6 +104,14 @@ async function run() {
             const result = await orderCollection.insertOne(newOrder);
             res.send(result);
         });
+
+        // #### Post api for addig reviews ####
+        app.post("/addReview", async (req, res) => {
+            const newReview = req.body;
+            const result = await reviewCollection.insertOne(newReview);
+            res.send(result);
+        });
+
         // === API to find Orders through Email::::
         app.get("/myorders", async (req, res) => {
             const email = req.query.email;
