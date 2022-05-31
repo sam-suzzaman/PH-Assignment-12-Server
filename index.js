@@ -113,6 +113,14 @@ async function run() {
             res.send(result);
         });
 
+        // +++++++++ Setting Delete API for an order +++++++++++
+        app.delete("/myorders/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { orderID: id };
+            const result = orderCollection.deleteOne(query);
+            res.send(result);
+        });
+
         //  ++++ Update Order-Quantity +++
         app.put("/order/:id", async (req, res) => {
             const id = req.params.id;
